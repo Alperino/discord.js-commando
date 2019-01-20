@@ -179,10 +179,10 @@ class Argument {
 
 			// Prompt the user for a new value
 			prompts.push(await msg.reply(stripIndents`
-				${empty ? this.prompt : valid ? valid : `You provided an invalid ${this.label}. Please try again.`}
+				${empty ? this.prompt : valid ? valid : `Geçersiz ${this.label}. Lütfen tekar deneyin.`}
 				${oneLine`
-					Respond with \`cancel\` to cancel the command.
-					${wait ? `The command will automatically be cancelled in ${this.wait} seconds.` : ''}
+					\`iptal\` yazarak komutu iptal edebilirsin.
+					${wait ? `Otomatik olarak ${this.wait} saniye sonra iptal edilcektir.` : ''}
 				`}
 			`));
 
@@ -206,7 +206,7 @@ class Argument {
 			}
 
 			// See if they want to cancel
-			if(value.toLowerCase() === 'cancel') {
+			if(value.toLowerCase() === 'iptal') {
 				return {
 					value: null,
 					cancelled: 'user',
@@ -265,12 +265,12 @@ class Argument {
 					const escaped = escapeMarkdown(value).replace(/@/g, '@\u200b');
 					prompts.push(await msg.reply(stripIndents`
 						${valid ? valid : oneLine`
-							You provided an invalid ${this.label},
-							"${escaped.length < 1850 ? escaped : '[too long to show]'}".
-							Please try again.
+							Geçersiz ${this.label},
+							"${escaped.length < 1850 ? escaped : '[Çok uzun gösteremiyorum.]'}".
+							Lütfen tekrar deneyin.
 						`}
 						${oneLine`
-							Respond with \`cancel\` to cancel the command, or \`finish\` to finish entry up to this point.
+							\`iptal\` yazarak komutu iptal edebilirsin
 							${wait ? `The command will automatically be cancelled in ${this.wait} seconds.` : ''}
 						`}
 					`));
@@ -278,9 +278,9 @@ class Argument {
 					prompts.push(await msg.reply(stripIndents`
 						${this.prompt}
 						${oneLine`
-							Respond with \`cancel\` to cancel the command, or \`finish\` to finish entry.
-							${wait ? `The command will automatically be cancelled in ${this.wait} seconds, unless you respond.` : ''}
-						`}
+						\`iptal\` yazarak komutu iptal edebilirsin.
+					${wait ? `Otomatik olarak ${this.wait} saniye sonra iptal edilcektir.` : ''}
+`}
 					`));
 				}
 
@@ -313,7 +313,7 @@ class Argument {
 						answers
 					};
 				}
-				if(lc === 'cancel') {
+				if(lc === 'iptal') {
 					return {
 						value: null,
 						cancelled: 'user',
